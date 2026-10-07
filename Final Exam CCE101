@@ -1,0 +1,163 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class MealPlanner {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+         System.out.println("=======USER PROFILE=======");
+        
+        System.out.print("Enter your Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter your Age: ");
+        int age = scanner.nextInt();
+
+        scanner.nextLine();
+        
+        System.out.print("Enter your Gender(Male/Female): ");
+        String gender = scanner.nextLine();
+
+       if(gender.equalsIgnoreCase("Male")){
+        System.out.println("Gender Accepted");
+       }else if (gender.equalsIgnoreCase("Female")){
+        System.out.println("Gender Accepted");
+       }else{
+        System.out.println("Gender Invalid!");
+       }
+       
+        System.out.print("Enter Weight(kg): ");
+        double weight = scanner.nextDouble();
+        
+ 
+        System.out.print("Enter Height(cm): ");
+        double height = scanner.nextDouble();
+
+        System.out.println("Activity Level:");
+        System.out.println("1. Sedentary");
+        System.out.println("2. Lightly Active");
+        System.out.println("3. Moderately Active");
+        System.out.println("4. Very Active");
+        System.out.println("5. Extra Active");
+
+        System.out.print("Choose your activity level (1-5): ");
+        int activity = scanner.nextInt();
+
+
+
+        if(activity == 1){
+            System.out.println("You selected: Sedentary");
+        }else if(activity == 2){
+            System.out.println("You selected: Lightly Active");
+        }else if(activity == 3){
+            System.out.println("You selected: Moderately Active");
+        }else if(activity == 4){
+            System.out.println("You selected: Very Active");
+        }else if(activity == 5){
+            System.out.println("You selected: Extra Active");
+        }else{
+            System.out.println("Invalid Level!");
+            System.out.println("Please choose 1 to 5.");
+        }
+        double bmr;
+
+        System.out.println("=======BMR========");
+
+        if(gender.equalsIgnoreCase("Male")){
+            bmr = ( 10 * weight ) + ( 6.25 * height ) - ( 5 * age ) + 5;
+        } else if (gender.equalsIgnoreCase("Female")){
+            bmr = ( 10 * weight ) + ( 6.25 * height ) - ( 5 * age) - 161;
+        }else{
+            System.out.println("Invalid Gender!");
+            bmr = 0;
+        } System.out.println("Your BMR is:" + bmr );
+
+        double activityMultiplier;
+
+        System.out.println("=======TDEE=======");
+
+        if(activity == 1) {
+            activityMultiplier = 1.2;
+        }else if (activity == 2) {
+            activityMultiplier = 1.375;
+        }else if (activity == 3) {
+            activityMultiplier = 1.55;
+        }else if (activity == 4) {
+            activityMultiplier = 1.725;
+        }else if (activity == 5) {
+            activityMultiplier = 1.9;
+        } else {
+            System.out.println("Invalid Activity!");
+            activityMultiplier = 0;
+        }
+        double tdee = bmr * activityMultiplier;
+        System.out.println("Your Tdee:" + tdee);
+
+        System.out.println("=======CalorieDeficit=======");
+        
+        System.out.print("Enter your desired calorie deficit: ");
+        double calorieDeficit = scanner.nextDouble();
+
+        double targetCalories = tdee - calorieDeficit;
+
+        System.out.println("Your Calorie Deficit:" + calorieDeficit);
+        System.out.println("Your Target Calories:" + targetCalories);
+
+        System.out.println("=======Meal Log=======");
+
+        scanner.nextLine();
+
+        int totalConsumed = 0;
+        String addMeal = "yes";
+       
+        ArrayList<String> mealHistory = new ArrayList<>();
+
+        while(addMeal.equalsIgnoreCase("yes")){
+        System.out.print("Enter Meal/Food: ");
+        String meal = scanner.nextLine();
+        
+        System.out.print("Enter Meal/Food Calories: ");
+        int calories = scanner.nextInt();
+        
+        totalConsumed = totalConsumed + calories;
+        mealHistory.add(meal + " - " + calories + " calories ");
+
+        scanner.nextLine();
+
+        System.out.print("Add another meal?(yes/no): ");
+        addMeal = scanner.nextLine();
+        } 
+        System.out.println("=======COMPUTE TOTAL CONSUMED=======");
+        
+        System.out.println("Total Consumed: " + totalConsumed);
+
+        double totalRemaining = targetCalories - totalConsumed;
+
+        System.out.println("Remaining Calories: " + totalRemaining);
+
+        System.out.println("=======DEFICIT STATUS=======");
+
+        if(totalConsumed <= targetCalories){
+            System.out.println("Deficit Status: Within Target");
+        }else{
+            System.out.println("Deficit Status: Exceeded Target!");
+        }
+        System.out.println("=======Calorie Standing=======");
+        System.out.println("Target Calories: " + targetCalories);
+        System.out.println("Total Consumed: " + totalConsumed);
+
+        double remainingCalories = targetCalories + totalConsumed;
+        System.out.println("Remaining Calories: " + remainingCalories);
+
+         if(totalConsumed <= targetCalories){
+            System.out.println("Deficit Status: Within Target");
+        }else{
+            System.out.println("Deficit Status: Exceeded Target!");
+        }
+        System.out.println("=======MEAL HISTORY=======");
+        
+        for(String history : mealHistory){
+             System.out.println(history);
+        }
+     }
+ }
